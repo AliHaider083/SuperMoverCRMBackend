@@ -16,10 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.http import JsonResponse
+
+def api_index(request):
+    return JsonResponse({
+        "message": "Welcome to the API",
+        "available_endpoints": [
+            "/api/core/",
+            "/api/crm/",
+            "/api/integration/"
+        ]
+    })
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/core/', include('core.urls')),
+    path('api/', api_index),  # This handles /api/ requests.
     path('api/crm/', include('crm.urls')),
     path('api/integration/', include('integration.urls')),
 ]
